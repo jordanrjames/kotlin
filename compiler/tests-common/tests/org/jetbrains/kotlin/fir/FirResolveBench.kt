@@ -17,11 +17,13 @@ import org.jetbrains.kotlin.fir.expressions.FirQualifiedAccessExpression
 import org.jetbrains.kotlin.fir.lightTree.LightTree2Fir
 import org.jetbrains.kotlin.fir.references.FirErrorNamedReference
 import org.jetbrains.kotlin.fir.resolve.firProvider
+import org.jetbrains.kotlin.fir.resolve.firSymbolProvider
 import org.jetbrains.kotlin.fir.resolve.providers.impl.FirProviderImpl
 import org.jetbrains.kotlin.fir.resolve.transformers.FirResolveProcessor
 import org.jetbrains.kotlin.fir.resolve.transformers.FirTransformerBasedResolveProcessor
 import org.jetbrains.kotlin.fir.resolve.transformers.FirGlobalResolveProcessor
 import org.jetbrains.kotlin.fir.types.*
+import org.jetbrains.kotlin.fir.types.impl.ConeClassLikeTypeImpl
 import org.jetbrains.kotlin.fir.visitors.FirDefaultVisitorVoid
 import org.jetbrains.kotlin.psi.KtFile
 import org.jetbrains.kotlin.psi.psiUtil.startOffset
@@ -343,7 +345,7 @@ class FirResolveBench(val withProgress: Boolean) {
     fun getTotalStatistics(): TotalStatistics = TotalStatistics(
         unresolvedTypes,
         resolvedTypes,
-        errorTypes,
+        errorTypes + errorFunctionCallTypes + errorQualifiedAccessTypes,
         implicitTypes,
         errorFunctionCallTypes,
         errorQualifiedAccessTypes,
